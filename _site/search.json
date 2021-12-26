@@ -4,7 +4,7 @@
       "title"    : "Digital Minimalism",
       "category" : "",
       "tags"     : "Social Media, Minimalism, Technology",
-      "url"      : "/blog/digital-minimalism",
+      "url"      : "/2019/02/20/digital-minimalism.html",
       "date"     : "2019-02-20 00:00:00 -0600"
     } ,
   
@@ -12,7 +12,7 @@
       "title"    : "Learn React.js in 5 minutes",
       "category" : "",
       "tags"     : "React, JavaScript, Web Development",
-      "url"      : "/blog/learn-react-js",
+      "url"      : "/2019/02/15/learn-react-js.html",
       "date"     : "2019-02-15 00:00:00 -0600"
     } ,
   
@@ -20,7 +20,7 @@
       "title"    : "Clean Coding",
       "category" : "",
       "tags"     : "Software Development, Clean Code",
-      "url"      : "/blog/clean-coding",
+      "url"      : "/2018/12/10/clean-coding.html",
       "date"     : "2018-12-10 00:00:00 -0600"
     } ,
   
@@ -28,7 +28,7 @@
       "title"    : "What the heck is a Callback?",
       "category" : "",
       "tags"     : "JavaScript, Nodejs, Web Development",
-      "url"      : "/blog/what-the-heck-is-a-callback",
+      "url"      : "/2018/12/01/what-the-heck-is-a-callback.html",
       "date"     : "2018-12-01 00:00:00 -0600"
     } ,
   
@@ -36,7 +36,7 @@
       "title"    : "4 Lessons After 11 Years in Silicon Valley",
       "category" : "",
       "tags"     : "",
-      "url"      : "/blog/four-lessons-after-eleven-years-in-silicon-valley",
+      "url"      : "/2018/05/09/four-lessons-after-eleven-years-in-silicon-valley.html",
       "date"     : "2018-05-09 00:00:00 -0500"
     } ,
   
@@ -44,7 +44,7 @@
       "title"    : "GitHub Flow",
       "category" : "",
       "tags"     : "GitHub, Workflow",
-      "url"      : "/blog/github-flow",
+      "url"      : "/2017/01/01/github-flow.html",
       "date"     : "2017-01-01 00:00:00 -0600"
     } ,
   
@@ -52,7 +52,7 @@
       "title"    : "A better Hello World",
       "category" : "",
       "tags"     : "Software Development",
-      "url"      : "/blog/a-better-hello-world",
+      "url"      : "/2016/07/23/a-better-hello-world.html",
       "date"     : "2016-07-23 00:00:00 -0500"
     } ,
   
@@ -60,7 +60,7 @@
       "title"    : "Do not go gentle into that good night",
       "category" : "",
       "tags"     : "Poetry",
-      "url"      : "/blog/do-not-go-gentle-into-that-good-night",
+      "url"      : "/2016/04/17/do-not-go-gentle-into-that-good-night.html",
       "date"     : "2016-04-17 00:00:00 -0500"
     } ,
   
@@ -68,7 +68,7 @@
       "title"    : "What is version control?",
       "category" : "",
       "tags"     : "Version Control",
-      "url"      : "/blog/what-is-version-control",
+      "url"      : "/2016/02/09/what-is-version-control.html",
       "date"     : "2016-02-09 00:00:00 -0600"
     } ,
   
