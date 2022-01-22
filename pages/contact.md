@@ -25,7 +25,7 @@ weight: 3
         {% include elements/button.html link="https://github.com/JiasenZheng" text="GitHub" %}
         </p>
         <p class="text-left">
-        {% include elements/button.html link="https://linkedin.com/in/jiasen-zheng-943994103/" text="Linkedin" %}
+        {% include elements/button.html link="https://linkedin.com/in/jiasen-zheng/" text="Linkedin" %}
         </p>
     </section><hr><br>
 </section>
