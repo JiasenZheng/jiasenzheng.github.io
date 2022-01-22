@@ -15,5 +15,5 @@ I am currently a student in the M.S. <b>Robotics</b> program at Northwestern Uni
 
 <!-- <div class="row">
 {% include about/skills.html title="Programming Languages" source=site.data.programming-skills %}
-<!-- {% include about/skills.html title="Engineering Skills" source=site.data.other-skills %} -->
+{% include about/skills.html title="Engineering Skills" source=site.data.other-skills %}
 </div> -->
