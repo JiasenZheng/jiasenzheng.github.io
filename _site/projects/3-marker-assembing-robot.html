@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<!--
+  portfolYOU Jekyll theme by Youssef Raafat
+  Free for personal and commercial use under the MIT license
+  https://github.com/YoussefRaafatNasry/portfolYOU
+-->
+
+<html lang="en" class="h-100">
+
+<head>
+
+  
+  
+
+  
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Marker Assembling Robot">
+  <meta property="og:description" content="Assembled markers and caps through pick, place, press, and sort operations sequences.">
+
+  <title>Marker Assembling Robot</title>
+  <!-- <title>Jiasen Zheng</title> -->
+  <meta name="description" content="Assembled markers and caps through pick, place, press, and sort operations sequences.">
+
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico">
+
+  <!-- Theme style -->
+  <script src="/assets/js/theme.js"></script>
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.0/css/all.css">
+
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+
+  <!-- Animate CSS CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+</head>
+
+<body class="h-100 d-flex flex-column">
+
+  <main class="flex-shrink-0 container mt-5">
+    <nav class="navbar navbar-expand-lg navbar-themed">
+
+  <a class="navbar-brand" href="/"><h5><b>JIASEN ZHENG</b></h5></a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <i class="fas fa-1x fa-bars text-themed"></i>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav ml-auto"><a class="nav-item nav-link active" href="/projects/">Projects</a>
+
+      <a class="nav-item nav-link " href="/about/">About</a>
+
+      <a class="nav-item nav-link " href="/contact/">Contact</a>
+
+      <a class="nav-item nav-link " href="/resume/">Resume</a>
+
+      
+
+      <span id="theme-toggler" class="nav-item nav-link" role="button" onclick="toggleTheme()"></span>
+    </div>
+  </div>
+
+</nav>
+    <div class="col-lg-10 mx-auto mt-5 markdown-body">
+  <h1 id="marker-assembling-robot">Marker Assembling Robot</h1>
+<p><br /></p>
+<h3 id="brief-overview">Brief overview</h3>
+<p><br />
+The project aims to assemble markers and caps through pick, place, press, and sort operations sequences. The intent was largely inspired by the application of robots in manufacturing and industry. Our project used a RealSense camera to detect the markers’ colors and MoveIt manipulation commands to actuate the robot. Franka-specific actions also were used to grip caps and markers during movement. The framework of the project was controlled using a state machine developed in the ROS package called SMACH. The state machine intelligence implemented sorting of colors by hue based on camera data coming from the RealSense perception subsystem. Intelligence then leveraged the manipulation to pick, place and press caps and markers in the assembly tray.</p>
+
+<h3 id="video-demo">Video demo</h3>
+<div class="video">
+  <iframe src="https://www.youtube.com/embed/SXJP4yIiKOU" frameborder="0" allowfullscreen=""></iframe>
+</div>
+<p><br /></p>
+<h3 id="collaborations">Collaborations</h3>
+<ul>
+  <li>Jiasen Zheng (Preception &amp; 3D Modeling)</li>
+  <li>Kojo Welbeck</li>
+  <li>Ian Kennedy</li>
+  <li>Bhagyesh Agresar</li>
+  <li>Keaton Griffith</li>
+</ul>
+
+<p><br /></p>
+<h3 id="manipulation">Manipulation</h3>
+<p><br />
+The manipulation package relies on several different <code class="language-plaintext highlighter-rouge">nodes</code> in order to function:</p>
+<ol>
+  <li><strong>manipulation_cap</strong> provides low-level position and orientation sensing services, along with error recovery, movements, and gripper grasping</li>
+  <li><strong>manipulation_macro_a</strong> provides position movement services for image captures using the RealSense</li>
+  <li><strong>manipulation_press</strong> provides a pressing service to cap the markers</li>
+  <li><strong>manipulation_local</strong> provides manipulation services for moving in between trays</li>
+  <li><strong>manipulation_pnp</strong> provides pick and place services between the feed and assembly trays</li>
+  <li><strong>debug_manipulation</strong> logs the external forces experienced by the robot</li>
+  <li><strong>plan_scene</strong> provides a planning scene for simulation-based motion planning in Moveit</li>
+  <li><strong>limit_set</strong> provides services to be used with the franka_control file launched prior to Moveit being launched. It allows the user to reconfigure the collision limits on the robot.</li>
+</ol>
+
+<p>Manipulation also relies on a python <strong>manipulation</strong> package with translational, array position, and verification utilities.
+A scene. yaml file is used for specifying parameters in the plan_scene node and the main manipulation movements scene elsewhere in the project.</p>
+
+<h3 id="perception">Perception</h3>
+<p><br /></p>
+<ul>
+  <li>All the computer vision algorithms are embedded in the <strong>vision</strong> python package, functions in the package can be called in a node by
+<code class="language-plaintext highlighter-rouge">import &lt;package name&gt;.&lt;script name&gt;</code> such as
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>import vision.vision1
+</code></pre></div>    </div>
+  </li>
+  <li><strong>sample_capture.py</strong>:  A helper python script to capture images using RealSense 435i RGB-D camera
+    <ol>
+      <li>Connect the RealSense camera to your laptop</li>
+      <li>Run the python script in a terminal:
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  python3 sample_capture.py
+</code></pre></div>        </div>
+      </li>
+      <li>Press ‘a’ to capture and save an image and use ‘q’ to quit the image window</li>
+    </ol>
+  </li>
+  <li><strong>hsv_slider.py</strong>: A helper python script to find the appropriate HSV range for color detection
+    <ol>
+      <li>Add the path of the image to  <code class="language-plaintext highlighter-rouge">frame = cv. imread()</code> to read the image</li>
+      <li>Run the python script in a terminal:
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  python3 hsv_slider.py
+</code></pre></div>        </div>
+      </li>
+      <li>A window of the original image and a window of HSV image with slide bars will show up</li>
+      <li>Test with HSV slide bars to find an appropriate range</li>
+    </ol>
+  </li>
+  <li><strong>vision.py</strong> A python script to detect contours and return a list of hue values
+    <ol>
+      <li>For testing purposes, an image can be loaded by setting the path to <code class="language-plaintext highlighter-rouge">image = cv. imread()</code></li>
+      <li>Run the python script in a terminal:
+        <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  python3 vision1.py
+</code></pre></div>        </div>
+      </li>
+      <li>A processed image with contours and a list of hue values will be returned</li>
+    </ol>
+
+    <p>The node that uses this library is called vision_bridge.</p>
+  </li>
+  <li><strong>vision_bridge node</strong>: Node that publishes a stream of ROS Images and implements a service <strong>capture</strong> that returns a list of H values of the detected markers and caps from an image.
+    <ol>
+      <li>run <code class="language-plaintext highlighter-rouge">rosservice call /capture</code> and specify the <strong>tray_location</strong> to run the service.
+        <ul>
+          <li>tray_location 1 : Represents Assembly Location</li>
+          <li>tray_location 2 : Represents Markers Location</li>
+          <li>tray_location 3 : Represents Caps Location</li>
+        </ul>
+      </li>
+    </ol>
+  </li>
+</ul>
+
+<p class="text-center">
+<a class="m-1 btn btn-outline-primary btn-2 " href="https://github.com/JiasenZheng/Marker_Assembling_Robot">
+  GitHub
+</a>
+</p>
+
+</div>
+  </main>
+
+  <footer class="mt-auto py-3 text-center">
+
+  <small class="text-muted mb-2">
+    <i class="fas fa-code"></i> with <i class="fas fa-heart"></i>
+    by <strong>Jiasen Zheng</strong>
+  </small>
+
+  <div class="container-fluid justify-content-center"><a class="social mx-1"  href="mailto:jiasenzheng2020@northwestern.edu"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#db4437'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fas fa-envelope fa-1x"></i>
+    </a><a class="social mx-1"  href="https://www.github.com/JiasenZheng"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#333333'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fab fa-github fa-1x"></i>
+    </a><a class="social mx-1"  href="https://www.linkedin.com/in/jiasen-zheng-943994103/"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#007bb5'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fab fa-linkedin-in fa-1x"></i>
+    </a>
+
+</div>
+
+  <!---->
+  <!-- <small id="attribution">
+    theme <a href="https://github.com/YoussefRaafatNasry/portfolYOU">portfolYOU</a>
+  </small> -->
+  
+</footer>
+
+  
+  <!-- GitHub Buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<!-- jQuery CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Popper.js CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+
+<!-- Bootstrap JS CDN -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<!-- wow.js CDN & Activation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
+<script> new WOW().init(); </script>
+
+<!-- Initialize all tooltips -->
+<script>
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
+
+
+</body>
+
+</html>

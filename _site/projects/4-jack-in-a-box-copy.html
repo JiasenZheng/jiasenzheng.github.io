@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<!--
+  portfolYOU Jekyll theme by Youssef Raafat
+  Free for personal and commercial use under the MIT license
+  https://github.com/YoussefRaafatNasry/portfolYOU
+-->
+
+<html lang="en" class="h-100">
+
+<head>
+
+  
+  
+
+  
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="2D Physics Engine From Scratch">
+  <meta property="og:description" content="Simulated a planer multi-body dynamics of a jack in a box with external forces and impacts.">
+
+  <title>2D Physics Engine From Scratch</title>
+  <!-- <title>Jiasen Zheng</title> -->
+  <meta name="description" content="Simulated a planer multi-body dynamics of a jack in a box with external forces and impacts.">
+
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico">
+
+  <!-- Theme style -->
+  <script src="/assets/js/theme.js"></script>
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.0/css/all.css">
+
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+
+  <!-- Animate CSS CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+</head>
+
+<body class="h-100 d-flex flex-column">
+
+  <main class="flex-shrink-0 container mt-5">
+    <nav class="navbar navbar-expand-lg navbar-themed">
+
+  <a class="navbar-brand" href="/"><h5><b>JIASEN ZHENG</b></h5></a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <i class="fas fa-1x fa-bars text-themed"></i>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav ml-auto"><a class="nav-item nav-link active" href="/projects/">Projects</a>
+
+      <a class="nav-item nav-link " href="/about/">About</a>
+
+      <a class="nav-item nav-link " href="/contact/">Contact</a>
+
+      <a class="nav-item nav-link " href="/resume/">Resume</a>
+
+      
+
+      <span id="theme-toggler" class="nav-item nav-link" role="button" onclick="toggleTheme()"></span>
+    </div>
+  </div>
+
+</nav>
+    <div class="col-lg-10 mx-auto mt-5 markdown-body">
+  <h1 id="2d-physics-engine-from-scratch-jack-in-a-box-">2D Physics Engine From Scratch (Jack In A Box) <br /><br /></h1>
+
+<h3 id="brief-overview">Brief overview</h3>
+<p><br />
+This project simulates a planer multi-body dynamics of a jack in a box. In the simulation, external forces are applied to the box. While the jack is falling freely, it will then experience some collisions with the box’s walls.</p>
+
+<h3 id="video-demo">Video demo</h3>
+<div class="video">
+  <iframe src="https://www.youtube.com/embed/pkTauVynRE8" frameborder="0" allowfullscreen=""></iframe>
+</div>
+<p><br /></p>
+<h3 id="system-schematic">System schematic</h3>
+<p><img src="http://localhost:4000/assets/jack1.jpeg" style="height: 600px; width:600px;" />
+<br />
+In the figure shown above, the system is a planar model, which means the two objects can only move in x and y directions. There are 9 frames in total:</p>
+<ul>
+  <li><strong>w</strong>: the world frame (reference frame)</li>
+  <li><strong>b</strong>: the box frame at the center of the box</li>
+  <li><strong>j</strong>: the jack frame at the center of the box</li>
+  <li><strong>b1,b2</strong>: the frames of the two corners of the box</li>
+  <li><strong>j1,j2,j3,j4</strong>: the frames of the 4 masses of the jack</li>
+</ul>
+
+<h3 id="parameter-setups">Parameter setups</h3>
+<p><br /></p>
+<ul>
+  <li><strong>l_box(5)</strong>: perpendicular distance from the center of the box to each wall</li>
+  <li><strong>m_box(150)</strong>: mass of each wall</li>
+  <li><strong>l_jack(1)</strong>: distance between the center of the jack to the mass attached to it</li>
+  <li><strong>m_jack(5)</strong>: point mass of each mass attached to the jack</li>
+  <li><strong>External force</strong>: only a force in the positive y-direction is set to counter the gravitational force from the box</li>
+  <li><strong>Initial configuration</strong>: A initial rotational speed of the box is set to be 1.5 rad/s so that the box keeps spinning counter-clockwise in the simulation</li>
+</ul>
+
+<h3 id="algorithm-descriptions">Algorithm descriptions</h3>
+<p><br /></p>
+<ul>
+  <li><strong>Rigid body transform</strong> <br /><br />
+    <ul>
+      <li><strong>g_wb &amp; g_wj</strong>: Transformations from the world frame to the box/ jack frame</li>
+      <li><strong>g_bb1 &amp; g_bb2</strong>: Transformations from the box frame to its two corners</li>
+      <li><strong>g_jj1 ~ g_jj4</strong>: Transformations from the jack frame to its for masses</li>
+      <li><strong>g_b1j1 ~ g_b1j4</strong>: Transformations from the top right corner to each mass of the jack</li>
+      <li><strong>g_b2j1 ~ g_b2j4</strong>: Transformations from the bottom left corner to each mass of the jack 
+<br /><br /></li>
+    </ul>
+  </li>
+  <li><strong>Euler Lagrange</strong><br /><br />
+To solve for the dynamic motions of the system, we need to calculate the Euler Lagrange equations and the external force and then equate them. Since we are dealing with objects with rotational inertia, we need to calculate the rotational kinetic energy. The following steps are used to find Euler Lagrange equations:
+    <ol>
+      <li>Calculate body velocities of each object</li>
+      <li>Find the 6 by 6 mass inertias of both objects. Both the jack and the mass are simplified as a model with 4 point masses attached to them</li>
+      <li>Calculate the kinetic and potential energies for both objects</li>
+      <li>Compute the Lagrangian of the system (L = KE-V)</li>
+      <li>Find the Euler Lagrangian equation based on Lagrangian (E_L = ddLdqdot - dLdq)
+<br /><br /></li>
+    </ol>
+  </li>
+  <li><strong>External forces</strong><br /><br />
+The only external force in this project is the force in the positive y-direction. The force is set to be the same as the gravitational force of the box. As a result, the system can be balanced and stay in the center in the simulation.
+<br /><br /></li>
+  <li><strong>Constraint equations</strong><br /><br />
+The constraints are determined between each mass of the jack and each wall of the box. As a result, there are in total 16 constraints defined. The constrain variable phi is defined as the expression of the distance between the two impact object. For example, the phi value between mass 1 of the jack and the right wall of the box is the x value of g_b1j1 (g_b1j1[0,3]).
+<br /><br /></li>
+  <li><strong>Impact updates</strong><br /><br />
+The following steps are used to solve for impact updates:
+    <ol>
+      <li>Create dummy variables for all the configurations variable for both before and after impact</li>
+      <li>Calculate Hamiltonian, dLdqdot, dphidq for the system</li>
+      <li>Substitute dummy variables to those equations for both before and after impact</li>
+      <li>Construct and solve for the equations based on the following formula:
+  <img src="http://localhost:4000/assets/jack2.png" alt="alt text" /> <br /><br /><br /></li>
+    </ol>
+  </li>
+</ul>
+
+<p class="text-center">
+<a class="m-1 btn btn-outline-primary btn-2 " href="https://github.com/JiasenZheng/Physics_Engine_From_Scratch">
+  GitHub
+</a>
+</p>
+
+</div>
+  </main>
+
+  <footer class="mt-auto py-3 text-center">
+
+  <small class="text-muted mb-2">
+    <i class="fas fa-code"></i> with <i class="fas fa-heart"></i>
+    by <strong>Jiasen Zheng</strong>
+  </small>
+
+  <div class="container-fluid justify-content-center"><a class="social mx-1"  href="mailto:jiasenzheng2020@northwestern.edu"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#db4437'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fas fa-envelope fa-1x"></i>
+    </a><a class="social mx-1"  href="https://www.github.com/JiasenZheng"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#333333'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fab fa-github fa-1x"></i>
+    </a><a class="social mx-1"  href="https://www.linkedin.com/in/jiasen-zheng-943994103/"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#007bb5'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fab fa-linkedin-in fa-1x"></i>
+    </a>
+
+</div>
+
+  <!---->
+  <!-- <small id="attribution">
+    theme <a href="https://github.com/YoussefRaafatNasry/portfolYOU">portfolYOU</a>
+  </small> -->
+  
+</footer>
+
+  
+  <!-- GitHub Buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<!-- jQuery CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Popper.js CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+
+<!-- Bootstrap JS CDN -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<!-- wow.js CDN & Activation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
+<script> new WOW().init(); </script>
+
+<!-- Initialize all tooltips -->
+<script>
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
+
+
+</body>
+
+</html>

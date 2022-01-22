@@ -6,15 +6,14 @@ weight: 2
 ---
 
 # **About Me**
+<br>
+<font size="+1">
+Hi, I am <b>Jiasen (Jason) Zheng</b> :wave:,<br>
 
-Hi I am **{{ site.author.name }}** :wave:,<br>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-
-<div class="row">
-{% include about/skills.html title="Programming Skills" source=site.data.programming-skills %}
-{% include about/skills.html title="Other Skills" source=site.data.other-skills %}
-</div>
+Jiasen is currently a student in the M.S. <b>Robotics</b> program at Northwestern University. Before Northwestern, he received his Bachelor's degree in Mechanical Engineer from Union College, where he developed various skills in mechanical design, engineering simulations, and mathematics. He is interested in the <b>autonomous vehicles</b> industry, and his projects involve <b>perception</b>, <b>SLAM</b>, <b>planning</b>, etc.
+</font>
 
 <div class="row">
-{% include about/timeline.html %}
+{% include about/skills.html title="Programming Languages" source=site.data.programming-skills %}
+{% include about/skills.html title="Engineering Skills" source=site.data.other-skills %}
 </div>

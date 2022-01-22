@@ -1,7 +1,6 @@
 ---
 layout: default
-title: Jiasen Zheng
 permalink: /
 ---
 
-{% include landing.html %}
+{% include projects/index.html %}

@@ -1,9 +1,10 @@
 ### Site Settings ###
 title               : JIASEN ZHENG
-description         : Hello
-baseurl             : ""                                        # Change to empty quotes if you are hosting your site at <your-username>.github.io directly
-repository          : jiasenzheng/jiasenzheng.github.io         # Change to <your-username>/<your-username>.github.io (or remove it if you don't need remote projects)
-remote_theme        : YoussefRaafatNasry/portfolYOU
+description         : >-
+                      Hello.
+baseurl             : ""                     # Change to empty quotes if you are hosting your site at <your-username>.github.io directly
+repository          :                        # Change to <your-username>/<your-username>.github.io (or remove it if you don't need remote projects)
+remote_theme        : JiasenZheng/portfolio
 open_new_tab        : false                             # Opens external URLs in new tab (works for posts, projects and navbar only)
 
 
@@ -17,13 +18,13 @@ nav_exclude:                                            # The following paths ar
   - pages/tags.html
   - pages/404.html
   - pages/index.md
-  # - documentation/partials/**                          # For Documentation Only
+  # - documentation/partials/**                           # For Documentation Only
 
 
 ### Author Info ###
 author:
   name              : Jiasen Zheng
-  image             : https://raw.githubusercontent.com/JiasenZheng/portfolio_images/main/test.jpg
+  image             : 
 # behance           : your_username
 # dribbble          : your_username
   email             : jiasenzheng2020@northwestern.edu
@@ -32,7 +33,7 @@ author:
 # gitlab            : your_username
 # instagram         : your_username
 # kaggle            : your_username
-  linkedin          : in/jiasen-zheng-943994103/
+  linkedin          : jiasen-zheng-943994103/
 # medium            : your_username
 # soundcloud        : your_username
 # spotify           : your_username
@@ -46,7 +47,7 @@ author:
 
 
 ### Posts ###
-# permalink: /blog/:title
+permalink: /blog/:title
 
 
 ### Collections ###
@@ -58,16 +59,16 @@ collections:
   #   output: true                                        # For Documentation Only
 
 
-# ### Disqus ###
-# disqus:
-#   shortname: your-short-name-disqus                     # Your website Shortname on disqus
+### Disqus ###
+disqus:
+  shortname: your-short-name-disqus                     # Your website Shortname on disqus
 
 
-# ### Analytics ###
-# analytics:
-#   enabled: false                                        # Set true to enable analytics
-#   google:
-#     tracking_id: your-google-tracking-id
+### Analytics ###
+analytics:
+  enabled: false                                        # Set true to enable analytics
+  google:
+    tracking_id: your-google-tracking-id
 
 
 ### Defaults for collections ###
@@ -82,7 +83,7 @@ defaults:
   #     type: "elements"                                  # For Documentation Only
   #   values:                                             # For Documentation Only
   #     layout: "element"                                 # For Documentation Only
-  # - scope:
+  - scope:
       path: ""
       type: "posts"
     values:

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+
+<!--
+  portfolYOU Jekyll theme by Youssef Raafat
+  Free for personal and commercial use under the MIT license
+  https://github.com/YoussefRaafatNasry/portfolYOU
+-->
+
+<html lang="en" class="h-100">
+
+<head>
+
+  
+  
+
+  
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Projects">
+  <meta property="og:description" content="Hello.">
+
+  <title>Projects</title>
+  <!-- <title>Jiasen Zheng</title> -->
+  <meta name="description" content="Hello.">
+
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico">
+
+  <!-- Theme style -->
+  <script src="/assets/js/theme.js"></script>
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.0/css/all.css">
+
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+
+  <!-- Animate CSS CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+</head>
+
+<body class="h-100 d-flex flex-column">
+
+  <main class="flex-shrink-0 container mt-5">
+    <nav class="navbar navbar-expand-lg navbar-themed">
+
+  <a class="navbar-brand" href="/"><h5><b>JIASEN ZHENG</b></h5></a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <i class="fas fa-1x fa-bars text-themed"></i>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav ml-auto"><a class="nav-item nav-link active" href="/projects/">Projects</a>
+
+      <a class="nav-item nav-link " href="/about/">About</a>
+
+      <a class="nav-item nav-link " href="/contact/">Contact</a>
+
+      <a class="nav-item nav-link " href="/resume/">Resume</a>
+
+      
+
+      <span id="theme-toggler" class="nav-item nav-link" role="button" onclick="toggleTheme()"></span>
+    </div>
+  </div>
+
+</nav>
+    
+<div class="card-columns m-3 mt-5">
+
+  <!-- Remote Projects -->
+  
+
+  <!-- Local Projects -->
+  <div class="wow animated fadeIn" data-wow-delay=".15s">
+  <a href="/projects/1-stereo-visual-odometry" class="project card text-themed"><img id="stereo-visual-odometry-img" class="card-img-top" src="https://github.com/JiasenZheng/portfolio_images/blob/main/vo.gif?raw=true" alt="Stereo Visual Odometry" /><div class="card-body">
+      <h5 id="stereo-visual-odometry-name" class="card-title">Stereo Visual Odometry
+      </h5>
+      <p id="stereo-visual-odometry-desc" class="card-text">Built visual odometry with a stereo camera setup that estimates the position and motion of the vehicle.</p>
+      <p id="stereo-visual-odometry-tools" class="card-text"><span class="badge badge-pill text-primary border border-primary ml-1">OpenCV</span><span class="badge badge-pill text-primary border border-primary ml-1">Python</span><span class="badge badge-pill text-primary border border-primary ml-1">SIFT</span><span class="badge badge-pill text-primary border border-primary ml-1">Motion Estimation</span></p>
+    </div>
+  </a>
+</div>
+
+  <div class="wow animated fadeIn" data-wow-delay=".15s">
+  <a href="/projects/2-youbot-manipulation" class="project card text-themed"><img id="youbot-mobile-manipulation-img" class="card-img-top" src="https://github.com/JiasenZheng/portfolio_images/blob/main/best.gif?raw=true" alt="Youbot Mobile Manipulation" /><div class="card-body">
+      <h5 id="youbot-mobile-manipulation-name" class="card-title">Youbot Mobile Manipulation
+      </h5>
+      <p id="youbot-mobile-manipulation-desc" class="card-text">Controlled a Youbot to pick and place a block with user-specified positions and then simulated it in Coppeliasim.</p>
+      <p id="youbot-mobile-manipulation-tools" class="card-text"><span class="badge badge-pill text-primary border border-primary ml-1">Python</span><span class="badge badge-pill text-primary border border-primary ml-1">Coppliasim</span><span class="badge badge-pill text-primary border border-primary ml-1">Trajectory Generation</span></p>
+    </div>
+  </a>
+</div>
+
+  <div class="wow animated fadeIn" data-wow-delay=".15s">
+  <a href="/projects/3-marker-assembing-robot" class="project card text-themed"><img id="marker-assembling-robot-img" class="card-img-top" src="https://github.com/JiasenZheng/portfolio_images/blob/main/marker.gif?raw=true" alt="Marker Assembling Robot" /><div class="card-body">
+      <h5 id="marker-assembling-robot-name" class="card-title">Marker Assembling Robot
+      </h5>
+      <p id="marker-assembling-robot-desc" class="card-text">Assembled markers and caps through pick, place, press, and sort operations sequences.</p>
+      <p id="marker-assembling-robot-tools" class="card-text"><span class="badge badge-pill text-primary border border-primary ml-1">ROS</span><span class="badge badge-pill text-primary border border-primary ml-1">Python</span><span class="badge badge-pill text-primary border border-primary ml-1">OpenCV</span><span class="badge badge-pill text-primary border border-primary ml-1">Moveit</span><span class="badge badge-pill text-primary border border-primary ml-1">Smach</span></p>
+    </div>
+  </a>
+</div>
+
+  <div class="wow animated fadeIn" data-wow-delay=".15s">
+  <a href="/projects/4-jack-in-a-box-copy" class="project card text-themed"><img id="2d-physics-engine-from-scratch-img" class="card-img-top" src="https://github.com/JiasenZheng/portfolio_images/blob/main/jack.gif?raw=true" alt="2D Physics Engine From Scratch" /><div class="card-body">
+      <h5 id="2d-physics-engine-from-scratch-name" class="card-title">2D Physics Engine From Scratch
+      </h5>
+      <p id="2d-physics-engine-from-scratch-desc" class="card-text">Simulated a planer multi-body dynamics of a jack in a box with external forces and impacts.</p>
+      <p id="2d-physics-engine-from-scratch-tools" class="card-text"><span class="badge badge-pill text-primary border border-primary ml-1">Python</span><span class="badge badge-pill text-primary border border-primary ml-1">Lagrangian Dynamics</span><span class="badge badge-pill text-primary border border-primary ml-1">Rigid Body Transform</span><span class="badge badge-pill text-primary border border-primary ml-1">Impact Update</span></p>
+    </div>
+  </a>
+</div>
+
+  <div class="wow animated fadeIn" data-wow-delay=".15s">
+  <a href="/projects/5-rrt" class="project card text-themed"><img id="rapidly-exploring-random-tree-img" class="card-img-top" src="https://github.com/JiasenZheng/portfolio_images/blob/main/RRT3.gif?raw=true" alt="Rapidly-exploring Random Tree" /><div class="card-body">
+      <h5 id="rapidly-exploring-random-tree-name" class="card-title">Rapidly-exploring Random Tree
+      </h5>
+      <p id="rapidly-exploring-random-tree-desc" class="card-text">Implementations of the RRT algorithm under three different conditions</p>
+      <p id="rapidly-exploring-random-tree-tools" class="card-text"><span class="badge badge-pill text-primary border border-primary ml-1">RRT</span><span class="badge badge-pill text-primary border border-primary ml-1">Python</span><span class="badge badge-pill text-primary border border-primary ml-1">Path Planning</span></p>
+    </div>
+  </a>
+</div>
+
+  
+
+</div>
+
+
+
+  </main>
+
+  <footer class="mt-auto py-3 text-center">
+
+  <small class="text-muted mb-2">
+    <i class="fas fa-code"></i> with <i class="fas fa-heart"></i>
+    by <strong>Jiasen Zheng</strong>
+  </small>
+
+  <div class="container-fluid justify-content-center"><a class="social mx-1"  href="mailto:jiasenzheng2020@northwestern.edu"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#db4437'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fas fa-envelope fa-1x"></i>
+    </a><a class="social mx-1"  href="https://www.github.com/JiasenZheng"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#333333'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fab fa-github fa-1x"></i>
+    </a><a class="social mx-1"  href="https://www.linkedin.com/in/jiasen-zheng-943994103/"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#007bb5'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fab fa-linkedin-in fa-1x"></i>
+    </a>
+
+</div>
+
+  <!---->
+  <!-- <small id="attribution">
+    theme <a href="https://github.com/YoussefRaafatNasry/portfolYOU">portfolYOU</a>
+  </small> -->
+  
+</footer>
+
+  
+  <!-- GitHub Buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<!-- jQuery CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Popper.js CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+
+<!-- Bootstrap JS CDN -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<!-- wow.js CDN & Activation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
+<script> new WOW().init(); </script>
+
+<!-- Initialize all tooltips -->
+<script>
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
+
+
+</body>
+
+</html>
