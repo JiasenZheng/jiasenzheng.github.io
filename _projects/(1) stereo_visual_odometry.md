@@ -5,7 +5,7 @@ image: https://github.com/JiasenZheng/portfolio_images/blob/main/vo.gif?raw=true
 description: Built visual odometry with a stereo camera setup that estimates the position and motion of the vehicle.
 ---
 
-# Stere Visual Odometry
+# Stereo Visual Odometry
 <br>
 ### Brief overview
 <br>

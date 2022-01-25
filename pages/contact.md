@@ -17,7 +17,7 @@ weight: 3
     </section><hr><br>
     <section>
         <h3>Email</h3>
-        <p>JiasenZheng2020@u.northwestern.edu</p>
+        <a class="dy ke" href="mailto:jiasenzheng2020@u.northwestern.edu" rel="noopener ugc nofollow" target="_blank">jiasenzheng2020@u.northwestern.edu</a>
     </section><hr><br>
     <section>
         <h3>Social</h3>
@@ -29,3 +29,4 @@ weight: 3
         </p>
     </section><hr><br>
 </section>
+
