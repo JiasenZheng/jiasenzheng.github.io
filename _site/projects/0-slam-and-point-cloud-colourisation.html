@@ -20,12 +20,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Contact">
-  <meta property="og:description" content="Hello.">
+  <meta property="og:title" content="Slam and Point Cloud Colourisation">
+  <meta property="og:description" content="Implemented 3D SLAM using RTAB-Map on a Jackal UGV and align the color pixel to the point cloud. Developed a calibration ROS package to compute the extrisic ...">
 
-  <title>Contact</title>
+  <title>Slam and Point Cloud Colourisation</title>
   <!-- <title>Jiasen Zheng</title> -->
-  <meta name="description" content="Hello.">
+  <meta name="description" content="Implemented 3D SLAM using RTAB-Map on a Jackal UGV and align the color pixel to the point cloud. Developed a calibration ROS package to compute the extrisic ...">
 
   <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico">
 
@@ -58,11 +58,11 @@
   </button>
 
   <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav ml-auto"><a class="nav-item nav-link " href="/projects/">Projects</a>
+    <div class="navbar-nav ml-auto"><a class="nav-item nav-link active" href="/projects/">Projects</a>
 
       <a class="nav-item nav-link " href="/about/">About</a>
 
-      <a class="nav-item nav-link active" href="/contact/">Contact</a>
+      <a class="nav-item nav-link " href="/contact/">Contact</a>
 
       <a class="nav-item nav-link " href="/resume/">Resume</a>
 
@@ -74,35 +74,35 @@
 
 </nav>
     <div class="col-lg-10 mx-auto mt-5 markdown-body">
-  <section class="split contact">
-    <section class="alt">
-        <h3>Work Address</h3>
-        <p>2145 Sheridan Road<br />
-        Evanston, IL 60208</p>
-    </section><hr /><br />
-    <section>
-        <h3>Phone</h3>
-        <p>(224) 204-3864</p>
-    </section><hr /><br />
-    <section>
-        <h3>Email</h3>
-        <a class="dy ke" href="mailto:jiasenzheng2020@u.northwestern.edu" rel="noopener ugc nofollow" target="_blank">jiasenzheng2020@u.northwestern.edu</a>
-    </section><hr /><br />
-    <section>
-        <h3>Social</h3>
-        <p class="text-left">
-        <a class="m-1 btn btn-outline-primary btn-2 " href="https://github.com/JiasenZheng">
+  <h1 id="slam-and-point-cloud-colourisation">Slam and Point Cloud Colourisation</h1>
+<p><br /></p>
+<h3 id="brief-overview">Brief overview</h3>
+<p><br />
+3D Simultaneous localization and mapping (SLAM) is a broadly used technology in moblie robots to sense the environment and localize the robot. RTAB-Map is one of the most popular packages for 3D SLAM. The package is capable of constructing 3D map with real time performance and optimizing the model based on close loop detections. In this project, RTAB-map uses both sensor data from a Velodyne LiDar and a Realsense RGB-D camera as input. A Jackal UGV was used as the mobile platform.</p>
+
+<p>Another task in this project to map color pixels from a camera to the point cloud sensed by LiDar. Coloured point clouds can not only provide a more realistic visulization, but also add another type of information to point cloud analysis. To colorise the point cloud by referencing image, an approach to obtain the extrisic parameters which are transforms from one sensor device to another is important. Thus, a calibration package was developed to compute the extrisic parameters for devices sensing point cloud messages.</p>
+
+<h3 id="hardware">Hardware</h3>
+<ul>
+  <li>Jackal mobile platform</li>
+  <li>Intel RealSense camera D435i</li>
+  <li>Velodyne Puck LiDar sensor (VLP-16)</li>
+</ul>
+
+<p>The LiDar and camera are position on the top front of the Jackal UGV as shown in the following picture.
+<img src="http://localhost:4000/assets/velo1.png" alt="alt text" /></p>
+
+<h3 id="software">Software</h3>
+
+<h3 id="results">Results</h3>
+
+<h3 id="future-scope">Future Scope</h3>
+
+<p class="text-center">
+<a class="m-1 btn btn-outline-primary btn-2 " href="https://github.com/JiasenZheng/Stereo_Visual_Odometry">
   GitHub
 </a>
-        </p>
-        <p class="text-left">
-        <a class="m-1 btn btn-outline-primary btn-2 " href="https://linkedin.com/in/jiasen-zheng">
-  Linkedin
-</a>
-        </p>
-    </section><hr /><br />
-</section>
-
+</p>
 
 </div>
   </main>
