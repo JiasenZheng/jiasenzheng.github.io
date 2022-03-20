@@ -24,7 +24,7 @@ Another task in this project is to align color pixels from a camera to the point
 * PS4 Controller
 
 The LiDar and camera are positioned on the top front of the Jackal UGV as shown in the following picture.
-<img src="{{ site.url }}{{ site.baseurl }}/assets/jackal1.png" style="height: 300px; width:425px;"/>
+<img src="{{ site.url }}{{ site.baseurl }}/assets/jackal1.png" style="height: 300px; width:400px;"/>
 
 
 ### Software
@@ -32,13 +32,19 @@ The project pipeline includes three stages.
 
 **Stage 1 - 3D SLAM Implementation:**
 <br>
-The Jackal robot is equipped with a LiDar and a RGB-D camera. The lidar provides 3D point cloud messages to the mapping algorithm, while the camera provides both rgb images and depth-registerd images.  
-
+The Jackal robot is equipped with a LiDar and a RGB-D camera. The lidar provides 3D point cloud messages to the mapping algorithm, while the camera provides both rgb images and depth-registerd images. The flow chart below shows the important messages used in rtabmap with our configuration.
+<br>
+<img src="{{ site.url }}{{ site.baseurl }}/assets/rtab1.png"/>
 
 **Stage 2 - Calibration Package:**
+<br>
+A calibration ROS package is developed to find the extrisic parameters between the velodyne LiDar and Realsense camera. The point cloud colourisation algorithm is accomplished by the transformation from point cloud 3D coordinates to image pixel coordinates. Thus, an accurate extrisic parameter is curial to obain a good alignment between point clouds and images. Since the Realsense camera provides point cloud messages created by an active infrared stereo, the calibration task becames easier as we only need to align two clusters of point clouds from two sensors. The package can also used to calibrate the extrisic between two sensors which receive point clouds, such as two LiDars. The target object reqired for this project can be any rectgular prism or rectgular board. Two ROS services are used to find and store the reference points from the target object. The following image shows an example to find one reference point from LiDar point cloud data.
+<br>
+<img src="{{ site.url }}{{ site.baseurl }}/assets/calib7.png"/>
+<br>
 
 
-
+<br>
 **Stage 2 - Colourisation algorithm Design:**
 
 
