@@ -1,7 +1,7 @@
 ---
 name: Marker Assembling Robot
 tools: [ROS, Python, OpenCV, Moveit, Smach]
-image: https://github.com/JiasenZheng/portfolio_images/blob/main/marker.gif?raw=true
+image: https://jiasenzheng.github.io/assets/marker.gif
 description: Assembled markers and caps through pick, place, press, and sort operations sequences. 
 ---
 

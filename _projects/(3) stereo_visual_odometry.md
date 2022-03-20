@@ -1,7 +1,7 @@
 ---
 name: Stereo Visual Odometry
 tools: [OpenCV, Python, SIFT, Motion Estimation]
-image: https://github.com/JiasenZheng/portfolio_images/blob/main/vo.gif?raw=true
+image: https://jiasenzheng.github.io/assets/vo.gif
 description: Built visual odometry with a stereo camera setup that estimates the position and motion of the vehicle.
 ---
 

@@ -1,7 +1,7 @@
 ---
 name: Youbot Mobile Manipulation
 tools: [Python, Coppliasim, Trajectory Generation]
-image: https://github.com/JiasenZheng/portfolio_images/blob/main/best.gif?raw=true
+image: https://jiasenzheng.github.io/assets/best.gif
 description: Controlled a Youbot to pick and place a block with user-specified positions and then simulated it in Coppeliasim.
 ---
 

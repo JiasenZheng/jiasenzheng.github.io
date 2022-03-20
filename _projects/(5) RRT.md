@@ -1,7 +1,7 @@
 ---
 name:  Rapidly-exploring Random Tree
 tools: [RRT, Python, Path Planning]
-image: https://github.com/JiasenZheng/portfolio_images/blob/main/RRT3.gif?raw=true
+image: https://jiasenzheng.github.io/assets/RRT3.gif
 description: Implementations of the RRT algorithm under three different conditions
 ---
 
