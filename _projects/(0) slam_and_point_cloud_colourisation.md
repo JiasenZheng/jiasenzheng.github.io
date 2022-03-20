@@ -1,8 +1,8 @@
 ---
-name: Slam and Point Cloud Colourisation
-tools: [C++, ROS, 3D SLAM, Clibration, Direct Linear Transform]
-image: https://jiasenzheng.github.io/assets/velo1.jpg
-description: Implemented 3D SLAM using RTAB-Map on a Jackal UGV and align the color pixel to the point cloud. Developed a calibration ROS package to compute the extrisic parameters between a LiDar and a RGB-D camera.
+name: 3D Slam and Point Cloud Colourisation
+tools: [C++, ROS, 3D SLAM, Clibration, PCL]
+image: https://jiasenzheng.github.io/assets/slam1.gif
+description: Performed 3D SLAM using RTAB-Map on a Jackal UGV and align the color pixel to the point cloud; developed a calibration ROS package to compute the extrisic parameters between a LiDar and a RGB-D camera.
 ---
 
 # Slam and Point Cloud Colourisation
@@ -13,16 +13,34 @@ description: Implemented 3D SLAM using RTAB-Map on a Jackal UGV and align the co
 
 Another task in this project to map color pixels from a camera to the point cloud sensed by LiDar. Coloured point clouds can not only provide a more realistic visulization, but also add another type of information to point cloud analysis. To colorise the point cloud by referencing image, an approach to obtain the extrisic parameters which are transforms from one sensor device to another is important. Thus, a calibration package was developed to compute the extrisic parameters for devices sensing point cloud messages.
 
+### Video demo
+{% include elements/video.html id="YdkDaCQD1MY" %}
+<br>
+
 ### Hardware
 * Jackal mobile platform 
 * Intel RealSense camera D435i
 * Velodyne Puck LiDar sensor (VLP-16)
 
-The LiDar and camera are position on the top front of the Jackal UGV as shown in the following picture.
-![alt text]({{ site.url }}{{ site.baseurl }}/assets/velo1.png)
+The LiDar and camera are positioned on the top front of the Jackal UGV as shown in the following picture.
+<img src="{{ site.url }}{{ site.baseurl }}/assets/velo1.jpg" style="height: 300px; width:450px;"/>
 
 
 ### Software
+The project pipeline includes three stages.
+
+**Stage 1 - 3D SLAM Implementation:**
+The Jackal robot is equipped with a LiDar and a RGB-D camera. The lidar provides 3D point cloud messages to the mapping algorithm, while the camera provides both rgb images and depthregisterd images.  
+
+
+**Stage 2 - Calibration Package:**
+
+
+
+**Stage 2 - Colourisation algorithm Design:**
+
+
+
 
 
 ### Results
