@@ -38,14 +38,14 @@ The Jackal robot is equipped with a LiDar and a RGB-D camera. The lidar provides
 
 **Stage 2 - Calibration Package:**
 <br>
-A calibration ROS package is developed to find the extrisic parameters between the velodyne LiDar and Realsense camera. The point cloud colourisation algorithm is accomplished by the transformation from point cloud 3D coordinates to image pixel coordinates. Thus, an accurate extrisic parameter is curial to obain a good alignment between point clouds and images. Since the Realsense camera provides point cloud messages created by an active infrared stereo, the calibration task becames easier as we only need to align two clusters of point clouds from two sensors. The package can also used to calibrate the extrisic between two sensors which receive point clouds, such as two LiDars. The target object reqired for this project can be any rectgular prism or rectgular board. Two ROS services are used to find and store the reference points from the target object. The following image shows an example to find one reference point from LiDar point cloud data.
+A calibration ROS package is developed to find the extrisic parameters between the velodyne LiDar and Realsense camera. The point cloud colourisation algorithm is accomplished by the transformation from point cloud 3D coordinates to image pixel coordinates. Thus, an accurate extrisic parameter is curial to obain a good alignment between point clouds and images. Since the Realsense camera provides point cloud messages created by an active infrared stereo, the calibration task becames easier as we only need to align two clusters of point clouds from two sensors. The package can also used to calibrate the extrisic between two sensors which receive point clouds, such as two LiDars. The target object reqired for this project can be any rectgular prism or rectgular board. The calibration algorithm requires three corner coordinates from one face of the target object. Two ROS services are used to find and store the reference points. The following image shows an example to find one reference point from LiDar point cloud data.
 <br>
 <img src="{{ site.url }}{{ site.baseurl }}/assets/calib7.png"/>
 <br>
-
+The green cloud indicates the timestamped lidar data, and the red square region is given by a ROS service with specific coordinates and the length of the square. Another ROS service is used to find the corner coordinates of the target region. A more detailed instruction can be found in the [README](https://github.com/JiasenZheng/velo2rs_calibration) file of the calibration package repository. 
 
 <br>
-**Stage 2 - Colourisation algorithm Design:**
+**Stage 3 - Colourisation algorithm Design:**
 
 
 
