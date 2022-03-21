@@ -2,7 +2,7 @@
 name: 3D Slam and Point Cloud Colourisation
 tools: [C++, ROS, 3D SLAM, Clibration, PCL]
 image: https://jiasenzheng.github.io/assets/slam1.gif
-description: Performed 3D SLAM using RTAB-Map on a Jackal UGV and align the color pixel to the point cloud; developed a calibration ROS package to compute the extrisic parameters between a LiDar and a RGB-D camera.
+description: Performed 3D SLAM using RTAB-Map on a Jackal UGV and align the color pixel to the point cloud; developed a calibration ROS package to compute the extrinsic parameters between a LiDar and a RGB-D camera.
 ---
 
 # 3D Slam and Point Cloud Colourisation
@@ -11,7 +11,7 @@ description: Performed 3D SLAM using RTAB-Map on a Jackal UGV and align the colo
 <br>
 3D Simultaneous localization and mapping (SLAM) is a broadly used technology in moblie robots to map the environment and localize the robot. RTAB-Map is one of the most popular packages for 3D SLAM. The package is capable of constructing 3D map with real time performance and optimizing the model based on close loop detections. In this project, RTAB-map uses both sensor data from a Velodyne LiDar and a Realsense RGB-D camera as input. A Jackal UGV was used as the mobile platform. 
 
-Another task in this project is to align color pixels from a camera to the point cloud sensed by LiDar. Colourized point clouds can not only provide a more realistic visulization, but also add another type of information to point cloud analysis. To colorise the point cloud by referencing image, an approach to obtain the extrisic parameters which are transforms from one sensor device to another is important. Thus, a calibration package was developed to compute the extrisic parameters for devices sensing point cloud messages.
+Another task in this project is to align color pixels from a camera to the point cloud sensed by LiDar. Colourized point clouds can not only provide a more realistic visulization, but also add another type of information to point cloud analysis. To colorise the point cloud by referencing image, an approach to obtain the extrinsic parameters which are transforms from one sensor device to another is important. Thus, a calibration package was developed to compute the extrinsic parameters for devices sensing point cloud messages.
 <br>
 ### Video demo
 {% include elements/video.html id="YdkDaCQD1MY" %}
@@ -36,16 +36,24 @@ The Jackal robot is equipped with a LiDar and a RGB-D camera. The lidar provides
 <br>
 <img src="{{ site.url }}{{ site.baseurl }}/assets/rtab1.png"/>
 
+Rtab-map uses loop closure detection to optimize the map. The loop closure detector uses a bag-of-words approach to determinate how likely a new image comes from a previous location or a new location. The easiest way to accomplish a loop closure is to control the robot rotate by itself. As shown in the following gif, when the robot spinning around, both the point cloud map and grid map grows and become more certain about the environment.
+<br>
+<img src="{{ site.url }}{{ site.baseurl }}/assets/closure1.gif"/>
+The navigation stack is accomplished by move base ROS package which links together a global and local planner and publish a twist control message to move the robot to the desired goal position. The move base works well when the robot has a certain grid map. As shown in the following gif, the robot is implementing navigation stack. Also, the move base package has many configuration parameters, a good navigation requires a lot tunning of those various parameters.
+<br>
+<img src="{{ site.url }}{{ site.baseurl }}/assets/nav1.gif"/>
 **Stage 2 - Calibration Package:**
 <br>
-A calibration ROS package is developed to find the extrisic parameters between the velodyne LiDar and Realsense camera. The point cloud colourisation algorithm is accomplished by the transformation from point cloud 3D coordinates to image pixel coordinates. Thus, an accurate extrisic parameter is curial to obain a good alignment between point clouds and images. Since the Realsense camera provides point cloud messages created by an active infrared stereo, the calibration task becames easier as we only need to align two clusters of point clouds from two sensors. The package can also used to calibrate the extrisic between two sensors which receive point clouds, such as two LiDars. The target object reqired for this project can be any rectgular prism or rectgular board. The calibration algorithm requires three corner coordinates from one face of the target object. Two ROS services are used to find and store the reference points. The following image shows an example to find one reference point from LiDar point cloud data.
+A calibration ROS package is developed to find the extrinsic parameters between the velodyne LiDar and Realsense camera. The point cloud colourisation algorithm is accomplished by the transformation from point cloud 3D coordinates to image pixel coordinates. Thus, an accurate extrinsic parameter is curial to obain a good alignment between point clouds and images. Since the Realsense camera provides point cloud messages created by an active infrared stereo, the calibration task becames easier as we only need to align two clusters of point clouds from two sensors. The package can also used to calibrate the extrinsic between two sensors which receive point clouds, such as two LiDars. The target object reqired for this project can be any rectgular prism or rectgular board. The calibration algorithm requires three corner coordinates from one face of the target object. Two ROS services are used to find and store the reference points. The following image shows an example to find one reference point from LiDar point cloud data.
 <br>
 <img src="{{ site.url }}{{ site.baseurl }}/assets/calib7.png"/>
 <br>
 The green cloud indicates the timestamped lidar data, and the red square region is given by a ROS service with specific coordinates and the length of the square. Another ROS service is used to find the corner coordinates of the target region. A more detailed instruction can be found in the [README](https://github.com/JiasenZheng/velo2rs_calibration) file of the calibration package repository. 
 
 <br>
-**Stage 3 - Colourisation algorithm Design:**
+**Stage 3 - Colourisation algorithm:**
+<br>
+The colorisation algorithm is designed based on rigid body transforms and direct linear transforms. 
 
 
 
