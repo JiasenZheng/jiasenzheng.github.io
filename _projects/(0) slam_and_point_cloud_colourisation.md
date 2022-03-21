@@ -53,13 +53,32 @@ The green cloud indicates the timestamped lidar data, and the red square region 
 <br>
 **Stage 3 - Colourisation algorithm:**
 <br>
-The colorisation algorithm is designed based on rigid body transforms and direct linear transforms. 
+The colorisation algorithm is designed based on rigid body transforms and direct linear transforms. After performing the calibration package, we can obtain the transformation from LiDar to camera. The point clouds collected by Lidar is originally in the LiDar frame ("/velodyne"). By applying rigid body transform, the LiDar point clouds can be transformed to the camera frame ("/camera_depth_optical_frame"). 
+
+The direct linear transform (DLT) is a technique localize and calibrate a camera jointly. Normally, the camera model has 11 degrees of freedom to be calibrated, which are 6 extrinsic parameters and 5 intrinsic parameters. Since each Realsense camera comes with pre-calibrated intrinsic parameters, and those can be accessed by "/camera_info" topic of the camera, we can focus on computing the extrinsic parameters. The equation of DLT can be expressed as follow.
+<br>
+<img src="{{ site.url }}{{ site.baseurl }}/assets/dlt1.png"/>
+<br>
+The left side of the equation is the homogenous representation of pixel coordinates in the camera plane, while the right side consists of λ (the value of Z after 3D coordinates have been transformed), k (the intrinsic matrix),R (the rotation matrix), t(the translation matrix), and the homogenous representation of point cloud coordinates in camera frame.
+
+After the point cloud coordinates been mapped to the pixel coordinates in camera plane, a threshold is set to obtain only the point that can be received by the field of view of the camera. The RGB values is then added to those point cloud and publish as XYZRGB point clouds in the camera frame. 
 
 
+### Results and Analysis
+<br>
+**Calibration:**<br>
+The calibration package was tested in a simulation environment in Gazebo, where the extrinsic parameters are specified in the URDF files of our model. The ground truth transformation from the LiDar to thr camera in [XYZ(meters)RPY(radians)]  is [0.195,0.000,-0.128,-1.571,0.000,-1.571], while the calibrated extrinsic parameters gives a transform of [0.219, 0.023, -0.114, -1.566, 0.000, -1.581]. The errors are calculated to be  [0.024,0.023,0.014,0.005,0.000,-0.01].
+
+The tranlation errors are significantly larger than the rotation error. This is because the timestamped lidar point cloud can not provide a high resolution point cloud data, especialy the gap between each laser scans. As a result, the capture reference point may not be the cornor of the plane of our target object. Moreover, the Gazebo simulation has little noise applied to those sensor data, while in reality, both sensor has higher noises. Typically the depth messages obtained by the Realsense camera have larger noises than the velodyne LiDar. 
 
 
+<br>
+**Colourisation:**<br>
+The colorisation algorithm can be run and displayed in real time. The following gif shows the real time demostration of the colorised clouds.
+<br>
+<img src="{{ site.url }}{{ site.baseurl }}/assets/color1.gif"/>
+<br>
 
-### Results
 
 
 ### Future Scope 
