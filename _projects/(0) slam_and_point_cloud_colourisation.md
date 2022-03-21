@@ -1,7 +1,7 @@
 ---
 name: 3D Slam and Point Cloud Colourisation
 tools: [C++, ROS, 3D SLAM, Calibration, PCL]
-image: https://jiasenzheng.github.io/assets/slam1.gif
+image: https://jiasenzheng.github.io/assets/closure1.gif
 description: Performed 3D SLAM using RTAB-Map on a Jackal UGV and aligned the color pixel to the point cloud; developed a calibration ROS package to compute the extrinsic parameters between a LiDar and an RGB-D camera.
 ---
 
