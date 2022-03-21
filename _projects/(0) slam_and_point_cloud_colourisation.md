@@ -24,7 +24,9 @@ Another task in this project is to align color pixels from a camera to the point
 * PS4 Controller
 
 The LiDar and camera are positioned on the top front of the Jackal UGV, as shown in the following picture.
+<br>
 <img src="{{ site.url }}{{ site.baseurl }}/assets/jackal1.png" style="height: 300px; width:400px;"/>
+<br>
 
 
 ### Software
@@ -35,13 +37,15 @@ The project pipeline includes three stages.
 The Jackal robot is equipped with a LiDar and an RGB-D camera. The Lidar provides 3D point cloud messages to the mapping algorithm, while the camera provides both RGB images and depth-registered images. The flow chart below shows our configuration's important messages used in rtabmap.
 <br>
 <img src="{{ site.url }}{{ site.baseurl }}/assets/rtab1.png"/>
-
+<br>
 Rtab-map uses loop closure detection to optimize the map. The loop closure detector uses a bag-of-words approach to determine how likely a new image comes from a previous location or a new location. The easiest way to accomplish a loop closure is to control the robot rotating by itself. As shown in the following gif, when the robot spins around, both the point cloud map and grid map grow and become more certain about the environment.
 <br>
 <img src="{{ site.url }}{{ site.baseurl }}/assets/closure1.gif"/>
+<br>
 The navigation stack is accomplished by the move base ROS package, which links together a global and local planner and publishes a twist control message to move the robot to the desired goal position. The move base works better when the robot has a more certain grid map. The following gif shows that the robot is implementing a navigation stack. Also, the move base package has many configuration parameters; good navigation requires a lot of tunning of those various parameters.
 <br>
 <img src="{{ site.url }}{{ site.baseurl }}/assets/nav1.gif"/>
+<br>
 **Stage 2 - Calibration Package:**
 <br>
 A calibration ROS package is developed to find the extrinsic parameters between the Velodyne LiDar and Realsense camera. The point cloud colorization algorithm is accomplished by the transformation from point cloud 3D coordinates to image pixel coordinates. Thus, an accurate extrinsic parameter is crucial for good alignment between point clouds and images. Since the Realsense camera provides point cloud messages created by an active infrared stereo, the calibration task becomes easier as we only need to align two clusters of point clouds from two sensors. The package can also calibrate the extrinsic between two sensors that receive point clouds, such as two LiDars. The target object required for this project can be any rectangular prism or rectangular board. The calibration algorithm requires three corner coordinates from one face of the target object. Two ROS services are used to find and store the reference points. The following image shows an example to find one reference point from LiDar point cloud data.
@@ -83,7 +87,7 @@ The following two pictures show more detailed results each frame with a cheese b
 <img src="{{ site.url }}{{ site.baseurl }}/assets/color1.png"/>
 
 <img src="{{ site.url }}{{ site.baseurl }}/assets/color3.png"/>
-
+<br>
 Due to the low resolution of the timestamped lidar point clouds, not enough RGB pixels were added to the point cloud. The accurate alignment of the color image and the point cloud depends on the performance extrinsic calibrations. 
 
 
