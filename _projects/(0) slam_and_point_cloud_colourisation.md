@@ -74,9 +74,15 @@ The tranlation errors are significantly larger than the rotation error. This is 
 
 <br>
 **Colourisation:**<br>
-The colorisation algorithm can be run and displayed in real time. The following gif shows the real time demostration of the colorised clouds.
+The colorisation algorithm can be run and displayed in real time. The following gif shows the demostration of the colorised clouds with real time performance.
 <br>
 <img src="{{ site.url }}{{ site.baseurl }}/assets/color1.gif"/>
+<br>
+The following two pictures show more detailed results each frame with a cheese board and a trash bin.
+<br>
+<img src="{{ site.url }}{{ site.baseurl }}/assets/color1.png"/>
+<br><br>
+<img src="{{ site.url }}{{ site.baseurl }}/assets/color1.png"/>
 <br>
 
 
