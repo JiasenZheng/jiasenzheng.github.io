@@ -71,7 +71,7 @@ After the point cloud coordinates have been mapped to the pixel coordinates in t
 ### Results and Analysis
 <br>
 **Calibration:**<br>
-The calibration package was tested in a simulation environment in Gazebo, where the extrinsic parameters are specified in the URDF files of our model. The ground truth transformation from the LiDar to thr camera in [XYZ(meters)RPY(radians)]  is [0.195,0.000,-0.128,-1.571,0.000,-1.571], while the calibrated extrinsic parameters gives a transform of [0.219, 0.023, -0.114, -1.566, 0.000, -1.581]. The errors are calculated to be  [0.024,0.023,0.014,0.005,0.000,-0.01].
+The calibration package was tested in a simulation environment in Gazebo, where the extrinsic parameters are specified in the URDF files of our model. The ground truth transformation from the LiDar to the camera in [XYZ(meters)RPY(radians)]  is [0.195,0.000,-0.128,-1.571,0.000,-1.571], while the calibrated extrinsic parameters gives a transform of [0.219, 0.023, -0.114, -1.566, 0.000, -1.581]. The errors are calculated to be  [0.024,0.023,0.014,0.005,0.000,-0.01].
 
 The translation errors are significantly larger than the rotation error. This error is because the timestamped lidar point cloud can not provide high-resolution point cloud data, especially the gap between each laser scan. As a result, the capture reference point may not be the corner of the plane of our target object. Moreover, the Gazebo simulation has little noise applied to those sensor data, while in reality, both sensors have higher noises. Typically the depth messages obtained by the Realsense camera have more considerable noises than the Velodyne LiDar. 
 
