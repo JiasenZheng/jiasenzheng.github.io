@@ -1,7 +1,7 @@
 ---
 name: 3D Object Detection and Pose Estimation
 tools: [C++, ROS, Pytorch, PCL, OpenCV]
-image: https://jiasenzheng.github.io/assets/3d_object_detection.gif
+image: https://jiasenzheng.github.io/assets/detection.gif
 description: Developed a calibration ROS package to compute the extrinsic parameters between a LiDar and an RGB-D camera.    Performed 3D SLAM using RTAB-Map on a Jackal UGV and aligned the color pixel to the point cloud.
 ---
 
