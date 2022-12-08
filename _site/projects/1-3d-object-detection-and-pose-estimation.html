@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+
+<!--
+  portfolYOU Jekyll theme by Youssef Raafat
+  Free for personal and commercial use under the MIT license
+  https://github.com/YoussefRaafatNasry/portfolYOU
+-->
+
+<html lang="en" class="h-100">
+
+<head>
+
+  
+  
+
+  
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="3D Object Detection and Pose Estimation">
+  <meta property="og:description" content="Developed a calibration ROS package to compute the extrinsic parameters between a LiDar and an RGB-D camera.    Performed 3D SLAM using RTAB-Map on a Jackal ...">
+
+  <title>3D Object Detection and Pose Estimation</title>
+  <!-- <title>Jiasen Zheng</title> -->
+  <meta name="description" content="Developed a calibration ROS package to compute the extrinsic parameters between a LiDar and an RGB-D camera.    Performed 3D SLAM using RTAB-Map on a Jackal ...">
+
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico">
+
+  <!-- Theme style -->
+  <script src="/assets/js/theme.js"></script>
+
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.0/css/all.css">
+
+  <!-- Bootstrap CSS CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+
+  <!-- Animate CSS CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.css">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+
+</head>
+
+<body class="h-100 d-flex flex-column">
+
+  <main class="flex-shrink-0 container mt-5">
+    <nav class="navbar navbar-expand-lg navbar-themed">
+
+  <a class="navbar-brand" href="/"><h5><b>JIASEN ZHENG</b></h5></a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <i class="fas fa-1x fa-bars text-themed"></i>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav ml-auto"><a class="nav-item nav-link active" href="/projects/">Projects</a>
+
+      <a class="nav-item nav-link " href="/about/">About</a>
+
+      <a class="nav-item nav-link " href="/contact/">Contact</a>
+
+      <a class="nav-item nav-link " href="/resume/">Resume</a>
+
+      
+
+      <span id="theme-toggler" class="nav-item nav-link" role="button" onclick="toggleTheme()"></span>
+    </div>
+  </div>
+
+</nav>
+    <div class="col-lg-10 mx-auto mt-5 markdown-body">
+  <h1 id="3d-slam-and-point-cloud-colourisation">3D SLAM and Point Cloud Colourisation</h1>
+<p><br /></p>
+<h3 id="brief-overview">Brief overview</h3>
+<p><br />
+3D Simultaneous localization and mapping (SLAM) is a broadly used technology in mobile robots to map the environment and localize the robot. RTAB-Map is one of the most popular packages for 3D SLAM. The package can construct a 3D map with real-time performance and optimize the model based on close loop detections. This project, RTAB-map uses both sensor data from a Velodyne LiDar and a Realsense RGB-D camera as input in this project. A Jackal UGV was used as the mobile platform.</p>
+
+<p>Another task in this project is to align color pixels from a camera to the point cloud sensed by LiDar. Colorized point clouds can provide a more realistic visualization and add another type of information to point cloud analysis. To colorize the point cloud by referencing images, an approach to obtain the extrinsic parameters transformed from one sensor device to another is essential. Thus, a calibration package was developed to compute the extrinsic parameters for devices sensing point cloud messages.
+<br /></p>
+<h3 id="video-demo">Video demo</h3>
+<div class="video">
+  <iframe src="https://www.youtube.com/embed/YdkDaCQD1MY" frameborder="0" allowfullscreen=""></iframe>
+</div>
+<p><br /></p>
+
+<h3 id="hardware">Hardware</h3>
+<ul>
+  <li>Jackal UGV mobile platform</li>
+  <li>Intel RealSense camera D435i</li>
+  <li>Velodyne Puck LiDar sensor (VLP-16)</li>
+  <li>PS4 Controller</li>
+</ul>
+
+<p>The LiDar and camera are positioned on the top front of the Jackal UGV, as shown in the following picture.
+<br />
+<img src="http://localhost:4000/assets/jackal1.png" style="height: 300px; width:400px;" />
+<br /></p>
+
+<h3 id="software">Software</h3>
+<p>The project pipeline includes three stages.</p>
+
+<p><strong>Stage 1 - 3D SLAM Implementation:</strong>
+<br />
+The Jackal robot is equipped with a LiDar and an RGB-D camera. The Lidar provides 3D point cloud messages to the mapping algorithm, while the camera provides both RGB images and depth-registered images. The flow chart below shows our configuration’s important messages used in rtabmap.
+<br />
+<img src="http://localhost:4000/assets/rtab1.png" />
+<br />
+Rtab-map uses loop closure detection to optimize the map. The loop closure detector uses a bag-of-words approach to determine how likely a new image comes from a previous location or a new location. The easiest way to accomplish a loop closure is to control the robot rotating by itself. As shown in the following gif, when the robot spins around, both the point cloud map and grid map grow and become more certain about the environment.
+<br />
+<img src="http://localhost:4000/assets/closure1.gif" />
+<br />
+The navigation stack is accomplished by the move base ROS package, which links together a global and local planner and publishes a twist control message to move the robot to the desired goal position. The move base works better when the robot has a more certain grid map. The following gif shows that the robot is implementing a navigation stack. Also, the move base package has many configuration parameters; good navigation requires a lot of tunning of those various parameters.
+<br />
+<img src="http://localhost:4000/assets/nav1.gif" />
+<br />
+<strong>Stage 2 - Calibration Package:</strong>
+<br />
+A calibration ROS package is developed to find the extrinsic parameters between the Velodyne LiDar and Realsense camera. The point cloud colorization algorithm is accomplished by the transformation from point cloud 3D coordinates to image pixel coordinates. Thus, an accurate extrinsic parameter is crucial for good alignment between point clouds and images. Since the Realsense camera provides point cloud messages created by an active infrared stereo, the calibration task becomes easier as we only need to align two clusters of point clouds from two sensors. The package can also calibrate the extrinsic between two sensors that receive point clouds, such as two LiDars. The target object required for this project can be any rectangular prism or rectangular board. The calibration algorithm requires three corner coordinates from one face of the target object. Two ROS services are used to find and store the reference points. The following image shows an example to find one reference point from LiDar point cloud data.
+<br />
+<img src="http://localhost:4000/assets/calib7.png" />
+<br />
+The green cloud indicates the timestamped lidar data, and the red square region is given by a ROS service with specific coordinates and the length of the square. Another ROS service is used to find the corner coordinates of the target region. More detailed instruction can be found in the <a href="https://github.com/JiasenZheng/velo2rs_calibration">README</a> file of the calibration package repository.</p>
+
+<p><br />
+<strong>Stage 3 - Colourisation algorithm:</strong>
+<br />
+The colorization algorithm is designed based on rigid body transforms and direct linear transforms (DLT). After performing the calibration package, we can obtain the transformation from LiDar to the camera. The point clouds collected by Lidar are initially in the LiDar frame (“/velodyne”). Using rigid body transforms, the LiDar point clouds can be converted to the camera frame (“/camera_depth_optical_frame”).</p>
+
+<p>The direct linear transform (DLT) is a technique to jointly localize and calibrate a camera. Typically, the camera model has 11 degrees of freedom to calibrate six extrinsic and five intrinsic parameters. Since each Realsense camera comes with pre-calibrated intrinsic parameters, and those can be accessed by “/camera_info” topic, we can focus on computing the extrinsic parameters. The equation of DLT can be expressed as follow.
+<br />
+<img src="http://localhost:4000/assets/dlt1.png" />
+<br />
+The left side of the equation is the homogenous representation of pixel coordinates in the camera plane, while the right side consists of λ (the value of Z after 3D coordinates have been transformed), k (the intrinsic matrix), R (the rotation matrix), t(the translation matrix), and the homogenous representation of point cloud coordinates in the camera frame.</p>
+
+<p>After the point cloud coordinates have been mapped to the pixel coordinates in the camera plane, a threshold is set to obtain only the point that the camera’s field of view can receive. The RGB values are then added to those point clouds and published as XYZRGB point clouds in the camera frame.</p>
+
+<h3 id="results-and-analysis">Results and Analysis</h3>
+<p><br />
+<strong>Calibration:</strong><br />
+The calibration package was tested in a simulation environment in Gazebo, where the extrinsic parameters are specified in the URDF files of our model. The ground truth transformation from the LiDar to the camera in [XYZ(meters)RPY(radians)]  is [0.195,0.000,-0.128,-1.571,0.000,-1.571], while the calibrated extrinsic parameters gives a transform of [0.219, 0.023, -0.114, -1.566, 0.000, -1.581]. The errors are calculated to be  [0.024,0.023,0.014,0.005,0.000,-0.01].</p>
+
+<p>The translation errors are significantly larger than the rotation error. This error is because the timestamped lidar point cloud can not provide high-resolution point cloud data, especially the gap between each laser scan. As a result, the capture reference point may not be the corner of the plane of our target object. Moreover, the Gazebo simulation has little noise applied to those sensor data, while in reality, both sensors have higher noises. Typically the depth messages obtained by the Realsense camera have more considerable noises than the Velodyne LiDar.</p>
+
+<p><br />
+<strong>Colourisation:</strong><br />
+The colorisation algorithm can be run and displayed in real time. The following gif shows the demostration of the colorised clouds with real time performance.
+<br />
+<img src="http://localhost:4000/assets/color1.gif" />
+<br />
+The following two pictures show more detailed results each frame with a cheese board and a trash bin.
+<br />
+<img src="http://localhost:4000/assets/color1.png" /></p>
+
+<p><img src="http://localhost:4000/assets/color3.png" />
+<br />
+Due to the low resolution of the timestamped lidar point clouds, not enough RGB pixels were added to the point cloud. The accurate alignment of the color image and the point cloud depends on the performance extrinsic calibrations.</p>
+
+<h3 id="future-scope">Future Scope</h3>
+
+<p>The current calibration packages only require a minimal amount of point data to perform the direct linear transform. An algorithm with more data points can be developed to optimize the accuracy of the data captured. The object’s corner is difficult to find due to the low resolution of point cloud data. To improve this, the calibration algorithm can be implemented directly to the 3D map cloud rendered by rtabmap, which has a higher resolution, but more points need to be processed. The same approach can be applied to the colorization algorithm to achieve higher resolution colorized clouds. Another way to obtain accurate point coordinates is to change the target object. The object could be changed to a plane with four circular-cut holes. By collecting the clusters around the circumference of the circle, we can apply circle detection algorithms to find its center. The <a href="https://projecteuclid.org/journals/electronic-journal-of-statistics/volume-3/issue-none/Error-analysis-for-circle-fitting-algorithms/10.1214/09-EJS419.full">circle fitting algorithm</a> by A. Al-Sharadqah and N. Chernov is one of the most robust solutions.</p>
+
+<p class="text-center">
+<a class="m-1 btn btn-outline-primary btn-2 " href="https://github.com/JiasenZheng/3d_slam_colored">
+  GitHub: colorized cloud pkg
+</a>
+<a class="m-1 btn btn-outline-primary btn-2 " href="https://github.com/JiasenZheng/velo2rs_calibration">
+  GitHub: calibration pkg
+</a>
+</p>
+
+</div>
+  </main>
+
+  <footer class="mt-auto py-3 text-center">
+
+  <small class="text-muted mb-2">
+    <i class="fas fa-code"></i> with <i class="fas fa-heart"></i>
+    by <strong>Jiasen Zheng</strong>
+  </small>
+
+  <div class="container-fluid justify-content-center"><a class="social mx-1"  href="mailto:jiasenzheng2020@northwestern.edu"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#db4437'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fas fa-envelope fa-1x"></i>
+    </a><a class="social mx-1"  href="https://www.github.com/JiasenZheng"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#333333'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fab fa-github fa-1x"></i>
+    </a><a class="social mx-1"  href="https://www.linkedin.com/in/jiasen-zheng/"
+       style="color: #6c757d"
+       onMouseOver="this.style.color='#007bb5'"
+       onMouseOut="this.style.color='#6c757d'">
+      <i class="fab fa-linkedin-in fa-1x"></i>
+    </a>
+
+</div>
+
+  <!---->
+  <!-- <small id="attribution">
+    theme <a href="https://github.com/YoussefRaafatNasry/portfolYOU">portfolYOU</a>
+  </small> -->
+  
+</footer>
+
+  
+  <!-- GitHub Buttons -->
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+<!-- jQuery CDN -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<!-- Popper.js CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"></script>
+
+<!-- Bootstrap JS CDN -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<!-- wow.js CDN & Activation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
+<script> new WOW().init(); </script>
+
+<!-- Initialize all tooltips -->
+<script>
+$(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+})
+</script>
+
+
+</body>
+
+</html>
