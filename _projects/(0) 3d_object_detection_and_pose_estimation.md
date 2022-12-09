@@ -9,22 +9,18 @@ description: Developed a calibration ROS package to compute the extrinsic parame
 <br>
 ### Objective
 <br>
-
+**Shape-Based Remote Manipulation (NSF)**: The system, consisting of an operating interface coupled with a manipulator, promises a communication across the distance barrier. 
+<br>
+**My Focus**: As the first stage of this project, I am responsible to develop a perception system to sense the manipulator’s environment.
+<br>
+**Goal**: This project aims to design a computer vision setup and implement software to detect objects and estimate their poses in 3D space.
 <br>
 ### Video demo
-{% include elements/video.html id="YdkDaCQD1MY" %}
+{% include elements/video.html id="uvhC8gluA9o" %}
 <br>
 
 ### Hardware
-* Jackal UGV mobile platform 
-* Intel RealSense camera D435i
-* Velodyne Puck LiDar sensor (VLP-16)
-* PS4 Controller
-
-The LiDar and camera are positioned on the top front of the Jackal UGV, as shown in the following picture.
-<br>
-<img src="{{ site.url }}{{ site.baseurl }}/assets/jackal1.png" style="height: 300px; width:400px;"/>
-<br>
+* Intel Realsense L515 Lidar camera
 
 
 ### Software
