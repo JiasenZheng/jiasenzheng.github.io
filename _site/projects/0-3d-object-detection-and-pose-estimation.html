@@ -21,11 +21,11 @@
 
   <meta property="og:type" content="website">
   <meta property="og:title" content="3D Object Detection and Pose Estimation">
-  <meta property="og:description" content="Developed a calibration ROS package to compute the extrinsic parameters between a LiDar and an RGB-D camera.    Performed 3D SLAM using RTAB-Map on a Jackal ...">
+  <meta property="og:description" content="Designed a computer vision setup and implemented software to detect objects and estimate their poses in 3D space.">
 
   <title>3D Object Detection and Pose Estimation</title>
   <!-- <title>Jiasen Zheng</title> -->
-  <meta name="description" content="Developed a calibration ROS package to compute the extrinsic parameters between a LiDar and an RGB-D camera.    Performed 3D SLAM using RTAB-Map on a Jackal ...">
+  <meta name="description" content="Designed a computer vision setup and implemented software to detect objects and estimate their poses in 3D space.">
 
   <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico">
 
@@ -78,7 +78,7 @@
 <p><br /></p>
 <h3 id="objective">Objective</h3>
 <p><br />
-<strong>Shape-Based Remote Manipulation (NSF)</strong>: The system, consisting of an operating interface coupled with a manipulator, promises a communication across the distance barrier. 
+<strong>Shape-Based Remote Manipulation (NSF)</strong>: We are building a system, consisting of an operating interface coupled with a manipulator, promises a communication across the distance barrier. 
 <br />
 <strong>My Focus</strong>: As the first stage of this project, I am responsible to develop a perception system to sense the manipulator’s environment.
 <br />
@@ -92,8 +92,12 @@
 
 <h3 id="hardware">Hardware</h3>
 <ul>
-  <li>Intel Realsense L515 Lidar camera</li>
+  <li>Intel Realsense Lidar L515</li>
 </ul>
+
+<p>Intel realsense L515 uses a solid-state Lidar to sense depth. The Lidar can provide organized point clouds. It also has an RGB camera which is calibrated with the Lidar.</p>
+
+<h3 id="pipeline">Pipeline</h3>
 
 <h3 id="software">Software</h3>
 <p>The project pipeline includes three stages.</p>
