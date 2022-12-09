@@ -5,13 +5,11 @@ image: https://jiasenzheng.github.io/assets/detection.gif
 description: Developed a calibration ROS package to compute the extrinsic parameters between a LiDar and an RGB-D camera.    Performed 3D SLAM using RTAB-Map on a Jackal UGV and aligned the color pixel to the point cloud.
 ---
 
-# 3D SLAM and Point Cloud Colourisation
+# Point Cloud Object Detection and Pose Estimation
 <br>
-### Brief overview
+### Objective
 <br>
-3D Simultaneous localization and mapping (SLAM) is a broadly used technology in mobile robots to map the environment and localize the robot. RTAB-Map is one of the most popular packages for 3D SLAM. The package can construct a 3D map with real-time performance and optimize the model based on close loop detections. This project, RTAB-map uses both sensor data from a Velodyne LiDar and a Realsense RGB-D camera as input in this project. A Jackal UGV was used as the mobile platform. 
 
-Another task in this project is to align color pixels from a camera to the point cloud sensed by LiDar. Colorized point clouds can provide a more realistic visualization and add another type of information to point cloud analysis. To colorize the point cloud by referencing images, an approach to obtain the extrinsic parameters transformed from one sensor device to another is essential. Thus, a calibration package was developed to compute the extrinsic parameters for devices sensing point cloud messages.
 <br>
 ### Video demo
 {% include elements/video.html id="YdkDaCQD1MY" %}
