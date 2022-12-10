@@ -49,14 +49,36 @@ The inference server subscribes to the image topic and compute the target object
 
 **Perception core**<br>
 The perception core is a ROS node that performs the following tasks:
-* Receives the point cloud data from the LiDAR
-* Receives the target object masks from the inference server
-* Performs the following tasks:
-    * Colorize the point cloud data
-    * Perform 3D object detection
-    * Perform 3D object pose estimation
-    * Publish the results to the ROS topic
+* Receives both the point cloud from the LiDAR and the image from the RGB camera
+* Detects the table in point cloud data and remove it
+* Denoises, downsamples, and clusters the point cloud data to create a foreground mask
+* Receives the target object masks from the inference server and get a infrence mask
+* merge the foreground mask and the inference mask to get a finak mask
+* Performs oriented bounding box detection and pose estimation on the final mask with a state machine
 
-The perception core is implemented in C++ using ROS and PCL as the main libraries. The perception core subscribes to the point cloud data and the target object masks. The point cloud data is then colorized using the target object masks. The colorized point cloud data is then used to perform 3D object detection and pose estimation. The results are then published to the ROS topic.
+The perception core is implemented in C++ using ROS. The node uses PCL for point cloud process and OpenCV for image process. The organized point cloud acquired from the realsense Lidar helped to significantly reduce the runtime of the perception core. The algorithms in the node were implemented to keep the organized point cloud using a customized data structure, **OrderedCloud**. Moreover, some algorithm were implemented in image space to reduce the runtime such as **denoise** and **cluster**. As a result, the node can be run effeciently with real-time performance. A state machine is used to control the detection and pose estimation process based on the motion in the image space.
+
+The below image shows the table removal process:
+<br>
+<img src="{{ site.url }}{{ site.baseurl }}/assets/background_remover.gif"/>
+<br>
+
+The below image shows the colorized point cloud clusters after denoising, downsampling, and clustering:
+<br>
+<img src="{{ site.url }}{{ site.baseurl }}/assets/cluster.gif"/>
+<br>
+
+The below image shows the CAD model replacement of the target objects:
+<br>
+<img src="{{ site.url }}{{ site.baseurl }}/assets/3d_object_detection.gif"/>
+<br>
+
 
 ### Future Scope 
+* Implement a faster CNN model for instance segmentation such as [YOLACT-EDGE](https://github.com/haotian-liu/yolact_edge) to reduce the inference time
+* Annotate more images to train a more robust and accurate model
+* Annotate the model based on the cropped images to reduce the inference time
+* Call the inference server with cropped images to reduce the inference time
+* Implement a more robust and accurate pose estimation algorithm such as point cloud registration
+* Multi-thread CPU implementation on the perception core node to reduce the runtime
+* Implement some OpenCV and PCL algorithms in GPU to reduce the runtime

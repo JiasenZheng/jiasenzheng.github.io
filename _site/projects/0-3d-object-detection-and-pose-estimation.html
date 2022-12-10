@@ -98,78 +98,68 @@
 <p>Intel realsense L515 uses a solid-state Lidar to sense depth. The Lidar can provide organized point clouds. It also has an RGB camera which is calibrated with the Lidar.</p>
 
 <h3 id="pipeline">Pipeline</h3>
+<p><br />
+<img src="http://localhost:4000/assets/det_pipeline.png" />
+<br /></p>
 
 <h3 id="software">Software</h3>
-<p>The project pipeline includes three stages.</p>
+<p>The software of this project can be explained in two stages based on the two ROS nodes I have in the project:</p>
+<ul>
+  <li>Inference server</li>
+  <li>Perception core</li>
+</ul>
 
-<p><strong>Stage 1 - 3D SLAM Implementation:</strong>
+<p><strong>Inference server</strong><br />
+The inference server is a ROS node that runs a deep learning model (CNN) to detect objects in the image space. The inference server is implemented in Python using <a href="https://github.com/facebookresearch/detectron2">Detectron2</a> and Pytorch as the deep learning framework. For the use case of this project, a custom dataset is created to train the model. Mask-RCNN is used as the model architecture since we need to implement instance segmentation for our purposes. The model was then trained with 100 self-labeled images with an ontology of a “cheez-it” box. The labelled images are shown below:
 <br />
-The Jackal robot is equipped with a LiDar and an RGB-D camera. The Lidar provides 3D point cloud messages to the mapping algorithm, while the camera provides both RGB images and depth-registered images. The flow chart below shows our configuration’s important messages used in rtabmap.
+<img src="http://localhost:4000/assets/annotation_results.gif" />
 <br />
-<img src="http://localhost:4000/assets/rtab1.png" />
+The images are annotated on an open-sourced plattform, <a href="https://github.com/opencv/cvat">CVAT</a>. CVAT provides many tools to accelerate the labeling processes and improve the qualities, such as machine learning models. 
 <br />
-Rtab-map uses loop closure detection to optimize the map. The loop closure detector uses a bag-of-words approach to determine how likely a new image comes from a previous location or a new location. The easiest way to accomplish a loop closure is to control the robot rotating by itself. As shown in the following gif, when the robot spins around, both the point cloud map and grid map grow and become more certain about the environment.
+The model was then trained using Detectron2 with 100 labeled images. The inference results are shown below:
 <br />
-<img src="http://localhost:4000/assets/closure1.gif" />
+<img src="http://localhost:4000/assets/instance_segmentation.gif" />
 <br />
-The navigation stack is accomplished by the move base ROS package, which links together a global and local planner and publishes a twist control message to move the robot to the desired goal position. The move base works better when the robot has a more certain grid map. The following gif shows that the robot is implementing a navigation stack. Also, the move base package has many configuration parameters; good navigation requires a lot of tunning of those various parameters.
-<br />
-<img src="http://localhost:4000/assets/nav1.gif" />
-<br />
-<strong>Stage 2 - Calibration Package:</strong>
-<br />
-A calibration ROS package is developed to find the extrinsic parameters between the Velodyne LiDar and Realsense camera. The point cloud colorization algorithm is accomplished by the transformation from point cloud 3D coordinates to image pixel coordinates. Thus, an accurate extrinsic parameter is crucial for good alignment between point clouds and images. Since the Realsense camera provides point cloud messages created by an active infrared stereo, the calibration task becomes easier as we only need to align two clusters of point clouds from two sensors. The package can also calibrate the extrinsic between two sensors that receive point clouds, such as two LiDars. The target object required for this project can be any rectangular prism or rectangular board. The calibration algorithm requires three corner coordinates from one face of the target object. Two ROS services are used to find and store the reference points. The following image shows an example to find one reference point from LiDar point cloud data.
-<br />
-<img src="http://localhost:4000/assets/calib7.png" />
-<br />
-The green cloud indicates the timestamped lidar data, and the red square region is given by a ROS service with specific coordinates and the length of the square. Another ROS service is used to find the corner coordinates of the target region. More detailed instruction can be found in the <a href="https://github.com/JiasenZheng/velo2rs_calibration">README</a> file of the calibration package repository.</p>
+The inference server subscribes to the image topic and compute the target object masks. The inference server then publishes the masks to the perception core node.</p>
 
-<p><br />
-<strong>Stage 3 - Colourisation algorithm:</strong>
-<br />
-The colorization algorithm is designed based on rigid body transforms and direct linear transforms (DLT). After performing the calibration package, we can obtain the transformation from LiDar to the camera. The point clouds collected by Lidar are initially in the LiDar frame (“/velodyne”). Using rigid body transforms, the LiDar point clouds can be converted to the camera frame (“/camera_depth_optical_frame”).</p>
+<p><strong>Perception core</strong><br />
+The perception core is a ROS node that performs the following tasks:</p>
+<ul>
+  <li>Receives both the point cloud from the LiDAR and the image from the RGB camera</li>
+  <li>Detects the table in point cloud data and remove it</li>
+  <li>Denoises, downsamples, and clusters the point cloud data to create a foreground mask</li>
+  <li>Receives the target object masks from the inference server and get a infrence mask</li>
+  <li>merge the foreground mask and the inference mask to get a finak mask</li>
+  <li>Performs oriented bounding box detection and pose estimation on the final mask with a state machine</li>
+</ul>
 
-<p>The direct linear transform (DLT) is a technique to jointly localize and calibrate a camera. Typically, the camera model has 11 degrees of freedom to calibrate six extrinsic and five intrinsic parameters. Since each Realsense camera comes with pre-calibrated intrinsic parameters, and those can be accessed by “/camera_info” topic, we can focus on computing the extrinsic parameters. The equation of DLT can be expressed as follow.
-<br />
-<img src="http://localhost:4000/assets/dlt1.png" />
-<br />
-The left side of the equation is the homogenous representation of pixel coordinates in the camera plane, while the right side consists of λ (the value of Z after 3D coordinates have been transformed), k (the intrinsic matrix), R (the rotation matrix), t(the translation matrix), and the homogenous representation of point cloud coordinates in the camera frame.</p>
+<p>The perception core is implemented in C++ using ROS. The node uses PCL for point cloud process and OpenCV for image process. The organized point cloud acquired from the realsense Lidar helped to significantly reduce the runtime of the perception core. The algorithms in the node were implemented to keep the organized point cloud using a customized data structure, <strong>OrderedCloud</strong>. Moreover, some algorithm were implemented in image space to reduce the runtime such as <strong>denoise</strong> and <strong>cluster</strong>. As a result, the node can be run effeciently with real-time performance. A state machine is used to control the detection and pose estimation process based on the motion in the image space.</p>
 
-<p>After the point cloud coordinates have been mapped to the pixel coordinates in the camera plane, a threshold is set to obtain only the point that the camera’s field of view can receive. The RGB values are then added to those point clouds and published as XYZRGB point clouds in the camera frame.</p>
-
-<h3 id="results-and-analysis">Results and Analysis</h3>
-<p><br />
-<strong>Calibration:</strong><br />
-The calibration package was tested in a simulation environment in Gazebo, where the extrinsic parameters are specified in the URDF files of our model. The ground truth transformation from the LiDar to the camera in [XYZ(meters)RPY(radians)]  is [0.195,0.000,-0.128,-1.571,0.000,-1.571], while the calibrated extrinsic parameters gives a transform of [0.219, 0.023, -0.114, -1.566, 0.000, -1.581]. The errors are calculated to be  [0.024,0.023,0.014,0.005,0.000,-0.01].</p>
-
-<p>The translation errors are significantly larger than the rotation error. This error is because the timestamped lidar point cloud can not provide high-resolution point cloud data, especially the gap between each laser scan. As a result, the capture reference point may not be the corner of the plane of our target object. Moreover, the Gazebo simulation has little noise applied to those sensor data, while in reality, both sensors have higher noises. Typically the depth messages obtained by the Realsense camera have more considerable noises than the Velodyne LiDar.</p>
-
-<p><br />
-<strong>Colourisation:</strong><br />
-The colorisation algorithm can be run and displayed in real time. The following gif shows the demostration of the colorised clouds with real time performance.
+<p>The below image shows the table removal process:
 <br />
-<img src="http://localhost:4000/assets/color1.gif" />
-<br />
-The following two pictures show more detailed results each frame with a cheese board and a trash bin.
-<br />
-<img src="http://localhost:4000/assets/color1.png" /></p>
+<img src="http://localhost:4000/assets/background_remover.gif" />
+<br /></p>
 
-<p><img src="http://localhost:4000/assets/color3.png" />
+<p>The below image shows the colorized point cloud clusters after denoising, downsampling, and clustering:
 <br />
-Due to the low resolution of the timestamped lidar point clouds, not enough RGB pixels were added to the point cloud. The accurate alignment of the color image and the point cloud depends on the performance extrinsic calibrations.</p>
+<img src="http://localhost:4000/assets/cluster.gif" />
+<br /></p>
+
+<p>The below image shows the CAD model replacement of the target objects:
+<br />
+<img src="http://localhost:4000/assets/3d_object_detection.gif" />
+<br /></p>
 
 <h3 id="future-scope">Future Scope</h3>
-
-<p>The current calibration packages only require a minimal amount of point data to perform the direct linear transform. An algorithm with more data points can be developed to optimize the accuracy of the data captured. The object’s corner is difficult to find due to the low resolution of point cloud data. To improve this, the calibration algorithm can be implemented directly to the 3D map cloud rendered by rtabmap, which has a higher resolution, but more points need to be processed. The same approach can be applied to the colorization algorithm to achieve higher resolution colorized clouds. Another way to obtain accurate point coordinates is to change the target object. The object could be changed to a plane with four circular-cut holes. By collecting the clusters around the circumference of the circle, we can apply circle detection algorithms to find its center. The <a href="https://projecteuclid.org/journals/electronic-journal-of-statistics/volume-3/issue-none/Error-analysis-for-circle-fitting-algorithms/10.1214/09-EJS419.full">circle fitting algorithm</a> by A. Al-Sharadqah and N. Chernov is one of the most robust solutions.</p>
-
-<p class="text-center">
-<a class="m-1 btn btn-outline-primary btn-2 " href="https://github.com/JiasenZheng/3d_slam_colored">
-  GitHub: colorized cloud pkg
-</a>
-<a class="m-1 btn btn-outline-primary btn-2 " href="https://github.com/JiasenZheng/velo2rs_calibration">
-  GitHub: calibration pkg
-</a>
-</p>
+<ul>
+  <li>Implement a faster CNN model for instance segmentation such as <a href="https://github.com/haotian-liu/yolact_edge">YOLACT-EDGE</a> to reduce the inference time</li>
+  <li>Annotate more images to train a more robust and accurate model</li>
+  <li>Annotate the model based on the cropped images to reduce the inference time</li>
+  <li>Call the inference server with cropped images to reduce the inference time</li>
+  <li>Implement a more robust and accurate pose estimation algorithm such as point cloud registration</li>
+  <li>Multi-thread CPU implementation on the perception core node to reduce the runtime</li>
+  <li>Implement some OpenCV and PCL algorithms in GPU to reduce the runtime</li>
+</ul>
 
 </div>
   </main>
